@@ -1,0 +1,28 @@
+# Flutter
+.dart_tool/
+build/
+.idea/
+*.iml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Secrets and local settings - never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.jks
+*.keystore
+
+# Android
+local.properties
+
+# OS
+.DS_Store
+Thumbs.db
