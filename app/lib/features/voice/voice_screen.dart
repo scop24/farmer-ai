@@ -213,8 +213,12 @@ class _VoiceScreenState extends ConsumerState<VoiceScreen> {
     if (mounted) ref.read(voiceListeningProvider.notifier).stop();
   }
 
-  /// Our own input area inside the chat package: the suggestion
+  /// Our own input area, shown below the chat list: the suggestion
   /// chips plus the type-and-send row, in the app's own wording.
+  /// (It is NOT placed inside the chat package: the package stacks a
+  /// custom composer at the top of its area, which put the input box
+  /// above the messages. As a sibling under the chat it sits where a
+  /// chat input belongs — at the bottom.)
   Widget _composer(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
@@ -310,9 +314,14 @@ class _VoiceScreenState extends ConsumerState<VoiceScreen> {
                     surfaceContainerHigh: scheme.surfaceContainerHigh,
                   ),
                 ),
-                builders: Builders(composerBuilder: _composer),
+                // No composer inside the chat package (see
+                // _composer): the message list gets the full area.
+                builders: Builders(
+                  composerBuilder: (_) => const SizedBox.shrink(),
+                ),
               ),
             ),
+            _composer(context),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: Row(

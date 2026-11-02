@@ -49,6 +49,21 @@ void main() {
     );
   });
 
+  testWidgets('the input box sits below the messages, like a chat app', (
+    tester,
+  ) async {
+    await tester.pumpWidget(wrapScreen(const VoiceScreen()));
+
+    await tester.tap(find.text('Will it rain this week?'));
+    await tester.pumpAndSettle();
+
+    final replyY = tester
+        .getTopLeft(find.textContaining('This is a demo reply'))
+        .dy;
+    final inputY = tester.getTopLeft(find.byType(TextField)).dy;
+    expect(inputY, greaterThan(replyY));
+  });
+
   testWidgets('a saved conversation is restored when the screen opens', (
     tester,
   ) async {
